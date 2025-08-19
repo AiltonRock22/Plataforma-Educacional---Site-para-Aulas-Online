@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduConnect - Plataforma Educacional</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #4f46e5;
+            --primary-dark: #4338ca;
+            --secondary: #10b981;
+            --accent: #f59e0b;
+            --light: #f9fafb;
+            --dark: #1f2937;
+            --gray: #6b7280;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav li {
+            margin-left: 25px;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        nav a:hover {
+            color: #e0e7ff;
+        }
+        
+        .auth-buttons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .btn i {
+            margin-right: 8px;
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+        }
+        
+        .btn-outline:hover {
+            background: white;
+            color: var(--primary);
+        }
+        
+        .btn-primary {
+            background: white;
+            color: var(--primary);
+        }
+        
+        .btn-primary:hover {
+            background: #e0e7ff;
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 80px 0;
+            text-align: center;
+            background: url('https://images.unsplash.com/photo-1522881193457-37ae97c905bf?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80') no-repeat center center/cover;
+            color: white;
+            position: relative;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+        }
+        
+        .hero-content {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        /* Features */
+        .features {
+            padding: 80px 0;
+            background: white;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .section-title p {
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .feature-card {
+            background: var(--light);
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        /* Courses */
+        .courses {
+            padding: 80px 0;
+            background: #f9fafb;
+        }
+        
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .course-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .course-img {
+            height: 200px;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 4rem;
+        }
+        
+        .course-content {
+            padding: 25px;
+        }
+        
+        .course-category {
+            display: inline-block;
+            background: #e0e7ff;
+            color: var(--primary);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-bottom: 15px;
+        }
+        
+        .course-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+        }
+        
+        .course-info {
+            display: flex;
+            justify-content: space-between;
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+        
+        /* How it works */
+        .how-it-works {
+            padding: 80px 0;
+            background: white;
+        }
+        
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .step {
+            text-align: center;
+            flex: 1;
+            position: relative;
+            padding: 0 20px;
+        }
+        
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 auto 20px;
+        }
+        
+        .step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            top: 25px;
+            right: -50%;
+            width: 100%;
+            height: 2px;
+            background: var(--primary);
+            z-index: -1;
+        }
+        
+        /* Testimonials */
+        .testimonials {
+            padding: 80px 0;
+            background: #f9fafb;
+        }
+        
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .testimonial-card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            margin-right: 15px;
+        }
+        
+        /* CTA */
+        .cta {
+            padding: 80px 0;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            text-align: center;
+        }
+        
+        .cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .cta p {
+            max-width: 700px;
+            margin: 0 auto 30px;
+            opacity: 0.9;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        
+        .btn-white {
+            background: white;
+            color: var(--primary);
+        }
+        
+        .btn-white:hover {
+            background: #e0e7ff;
+        }
+        
+        .btn-light {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+        }
+        
+        .btn-light:hover {
+            background: white;
+            color: var(--primary);
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 60px 0 30px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: white;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column a {
+            color: #d1d5db;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column a:hover {
+            color: white;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #9ca3af;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin: 20px 0;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .steps {
+                flex-direction: column;
+                gap: 40px;
+            }
+            
+            .step:not(:last-child)::after {
+                display: none;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>EduConnect</span>
+                </div>
+                
+                <nav>
+                    <ul>
+                        <li><a href="#features">Recursos</a></li>
+                        <li><a href="#courses">Cursos</a></li>
+                        <li><a href="#how-it-works">Como Funciona</a></li>
+                        <li><a href="#testimonials">Depoimentos</a></li>
+                    </ul>
+                </nav>
+                
+                <div class="auth-buttons">
+                    <button class="btn btn-outline"><i class="fas fa-sign-in-alt"></i> Entrar</button>
+                    <button class="btn btn-primary"><i class="fas fa-user-plus"></i> Cadastrar</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Educação de Qualidade para Todos</h1>
+                <p>Conectamos professores e alunos em uma plataforma interativa com recursos avançados para um aprendizado eficiente e engajador.</p>
+                <div class="cta-buttons">
+                    <button class="btn btn-white"><i class="fas fa-book-open"></i> Começar a Estudar</button>
+                    <button class="btn btn-light"><i class="fas fa-chalkboard-teacher"></i> Ensinar na Plataforma</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Recursos da Plataforma</h2>
+                <p>Desenvolvemos ferramentas inovadoras para melhorar a experiência de ensino e aprendizagem</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <h3>Aulas ao Vivo</h3>
+                    <p>Interaja em tempo real com professores e colegas através de videochamadas com qualidade HD.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    <h3>Atividades Interativas</h3>
+                    <p>Exercícios, questionários e tarefas com correção automática e feedback instantâneo.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3>Fórum de Discussão</h3>
+                    <p>Espaço para tirar dúvidas, debater temas e compartilhar conhecimento com a comunidade.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Acompanhamento de Progresso</h3>
+                    <p>Relatórios detalhados do desempenho dos alunos e acompanhamento do progresso nas matérias.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Totalmente Responsivo</h3>
+                    <p>Acesse de qualquer dispositivo - computador, tablet ou smartphone - a qualquer hora.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-cloud-download-alt"></i>
+                    </div>
+                    <h3>Materiais de Apoio</h3>
+                    <p>Biblioteca com materiais complementares, apostilas, videoaulas e exercícios extras.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Courses -->
+    <section class="courses" id="courses">
+        <div class="container">
+            <div class="section-title">
+                <h2>Cursos em Destaque</h2>
+                <p>Explore nossa seleção de cursos ministrados por profissionais qualificados</p>
+            </div>
+            
+            <div class="courses-grid">
+                <div class="course-card">
+                    <div class="course-img">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <div class="course-content">
+                        <span class="course-category">Programação</span>
+                        <h3>Desenvolvimento Web Completo</h3>
+                        <p>Aprenda HTML, CSS, JavaScript e frameworks modernos do zero ao avançado.</p>
+                        <div class="course-info">
+                            <span><i class="fas fa-clock"></i> 120 horas</span>
+                            <span><i class="fas fa-users"></i> 850 alunos</span>
+                        </div>
+                        <button class="btn btn-primary">Ver Curso</button>
+                    </div>
+                </div>
+                
+                <div class="course-card">
+                    <div class="course-img">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <div class="course-content">
+                        <span class="course-category">Matemática</span>
+                        <h3>Matemática Avançada para ENEM</h3>
+                        <p>Preparação completa com os melhores professores e material atualizado.</p>
+                        <div class="course-info">
+                            <span><i class="fas fa-clock"></i> 80 horas</span>
+                            <span><i class="fas fa-users"></i> 620 alunos</span>
+                        </div>
+                        <button class="btn btn-primary">Ver Curso</button>
+                    </div>
+                </div>
+                
+                <div class="course-card">
+                    <div class="course-img">
+                        <i class="fas fa-language"></i>
+                    </div>
+                    <div class="course-content">
+                        <span class="course-category">Idiomas</span>
+                        <h3>Inglês Instrumental para Leitura</h3>
+                        <p>Desenvolva habilidades de leitura e interpretação de textos em inglês.</p>
+                        <div class="course-info">
+                            <span><i class="fas fa-clock"></i> 60 horas</span>
+                            <span><i class="fas fa-users"></i> 450 alunos</span>
+                        </div>
+                        <button class="btn btn-primary">Ver Curso</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How it works -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <div class="section-title">
+                <h2>Como Funciona</h2>
+                <p>Em poucos passos você começa a aprender ou ensinar na nossa plataforma</p>
+            </div>
+            
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Crie sua Conta</h3>
+                    <p>Registre-se como aluno ou professor em poucos minutos.</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Escolha seu Curso</h3>
+                    <p>Navegue pelo catálogo e selecione o curso ideal para você.</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Comece a Aprender</h3>
+                    <p>Acesse as aulas, materiais e atividades quando quiser.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>O que Nossos Alunos Dizem</h2>
+                <p>Depoimentos de quem já experimentou nossa plataforma</p>
+            </div>
+            
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        "A plataforma transformou minha maneira de estudar. As videoaulas são excelentes e o material de apoio é completo. Recomendo para todos que querem aprender de verdade!"
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">C</div>
+                        <div>
+                            <h4>Carolina Silva</h4>
+                            <p>Estudante de Programação</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        "Como professor, encontrei na EduConnect a ferramenta perfeita para ministrar minhas aulas. Os recursos interativos tornam o ensino muito mais dinâmico e eficiente."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">M</div>
+                        <div>
+                            <h4>Marcos Oliveira</h4>
+                            <p>Professor de Matemática</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        "A flexibilidade de poder estudar a qualquer hora foi essencial para mim que trabalho durante o dia. A plataforma é intuitiva e os cursos são de alta qualidade."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">R</div>
+                        <div>
+                            <h4>Ricardo Almeida</h4>
+                            <p>Estudante de Inglês</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta">
+        <div class="container">
+            <h2>Pronto para Transformar sua Experiência de Aprendizado?</h2>
+            <p>Junte-se a milhares de alunos e professores que já descobriram uma nova forma de ensinar e aprender</p>
+            <div class="cta-buttons">
+                <button class="btn btn-white"><i class="fas fa-user-graduate"></i> Quero ser Aluno</button>
+                <button class="btn btn-light"><i class="fas fa-chalkboard-teacher"></i> Quero ser Professor</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>EduConnect</h3>
+                    <p>Plataforma educacional inovadora para conectar professores e alunos em uma experiência de aprendizado enriquecedora.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Cursos</h3>
+                    <ul>
+                        <li><a href="#">Programação</a></li>
+                        <li><a href="#">Matemática</a></li>
+                        <li><a href="#">Idiomas</a></li>
+                        <li><a href="#">Ciências</a></li>
+                        <li><a href="#">Humanidades</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Recursos</h3>
+                    <ul>
+                        <li><a href="#">Aulas ao Vivo</a></li>
+                        <li><a href="#">Materiais de Apoio</a></li>
+                        <li><a href="#">Fórum de Discussão</a></li>
+                        <li><a href="#">Certificados</a></li>
+                        <li><a href="#">Aplicativo Móvel</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Contato</h3>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> contato@educonnect.com</li>
+                        <li><i class="fas fa-phone"></i> (11) 3456-7890</li>
+                        <li><i class="fas fa-map-marker-alt"></i> São Paulo, SP</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 EduConnect - Todos os direitos reservados</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Função para rolagem suave ao clicar nos links do menu
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                window.scrollTo({
+                    top: targetElement.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Animação de revelação dos elementos ao rolar a página
+        function revealElements() {
+            const elements = document.querySelectorAll('.feature-card, .course-card, .testimonial-card');
+            
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (elementTop < windowHeight - 100) {
+                    element.style.opacity = 1;
+                    element.style.transform = 'translateY(0)';
+                }
+            });
+        }
+
+        // Inicializar estilos para animação
+        document.querySelectorAll('.feature-card, .course-card, .testimonial-card').forEach(element => {
+            element.style.opacity = 0;
+            element.style.transform = 'translateY(50px)';
+            element.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+        });
+
+        // Verificar elementos ao carregar e ao rolar
+        window.addEventListener('load', revealElements);
+        window.addEventListener('scroll', revealElements);
+    </script>
+</body>
+</html>
